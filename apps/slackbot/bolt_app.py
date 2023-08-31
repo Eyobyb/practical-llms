@@ -160,22 +160,18 @@ def event_test(client, say, event):
     # only will be excuted if the user don't pass the daily limit
     # the daily limit is calculated based on the user's usage in a workspace
     # users with a daily limitation can be allowed to use in a different workspace
+    
     if can_excute:
+
         # used to reconstruct the question. if the question contains a link recreate
-        # them so that they contain scraped and summerized content of the link
+        # them so that they contain scraped and summarized content of the link
         reconstructor = PromptReconstructor(
             question=question, slack_message=[replies["messages"][-1]]
         )
-        question = reconstructor.reconstruct_prompt(
-            user_id=user_id, team_id=team_id)
+        question = reconstructor.reconstruct_prompt()
+        results, _ = get_response(question, previous_messages, verbose_logger, user_id ,team_id)
 
-        results, verbose_message = get_response(question=question, previous_messages=previous_messages,
-                                                team_id=team_id, user_id=user_id , verbose_logger=verbose_logger)
         say(results, thread_ts=thread_ts)
-
-        if verbose_on:
-            say(f"#verbose message: \n```{verbose_message}```",
-            thread_ts=thread_ts)
     else:
         say(cfg.DAILY_LIMIT_REACHED_MESSAGE, thread_ts=thread_ts)
 
