@@ -17,13 +17,15 @@ class PromptReconstructor:
     def reconstruct_prompt(self, user_id=None,  team_id=None):
         question = self.question
         last_message = self.slack_message
-        last_message_links = get_link_from_slack_client_conversation(last_message)
+        last_message_links = get_link_from_slack_client_conversation(
+            last_message)
 
         # if there is a link inside the question scrape then summarize based
         # on question and then aggregate to the question
 
         if len(last_message_links) > 0:
-            available_token = 3000 - count_string_tokens(question, "gpt-3.5-turbo")
+            available_token = 3000 - \
+                count_string_tokens(question, "gpt-3.5-turbo")
             per_scrape_token_size = available_token / len(last_message_links)
             final_summary = []
             for last_message_link in last_message_links:
@@ -45,7 +47,6 @@ class PromptReconstructor:
                         link=link,
                         user_id=user_id,
                         team_id=team_id,
-                        open_ai_key=cfg.OPENAI_API_KEY,
                         question=question,
                         text_data=scraped_data["data"],
                     )
@@ -56,7 +57,6 @@ class PromptReconstructor:
                     ):
                         chunk_summary = chunk_and_summerize(
                             link=link,
-                            open_ai_key=cfg.OPENAI_API_KEY,
                             user_id=user_id,
                             team_id=team_id,
                             question=question,
@@ -65,5 +65,6 @@ class PromptReconstructor:
 
                     final_summary.append({"data": chunk_summary, "link": link})
 
-            question = question_reconstructor(question=question, data=final_summary)
+            question = question_reconstructor(
+                question=question, data=final_summary)
         return question

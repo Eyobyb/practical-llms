@@ -12,8 +12,7 @@ from langchain.llms import OpenAI
 from langchain.text_splitter import TokenTextSplitter
 
 from models.sherpa_base_model import SherpaOpenAI
-
-
+import config as cfg
 
 
 def load_files(files: List[str]) -> List[Document]:
@@ -113,14 +112,14 @@ def count_string_tokens(string: str, model_name: str) -> int:
     return len(encoding.encode(string))
 
 
-def chunk_and_summerize(text_data: str,  question: str, open_ai_key: str, link: str, team_id: str = None, user_id: str = None):
+def chunk_and_summerize(text_data: str,  question: str , link: str, team_id: str = None, user_id: str = None):
     llm = SherpaOpenAI(
-        temperature=0.9, openai_api_key=open_ai_key, user_id=user_id, team_id=team_id)
+        temperature=0.9, openai_api_key=cfg.OPENAI_API_KEY, user_id=user_id, team_id=team_id)
    
     instruction = (
         "include any information that can be used to answer the "
-        "question '{question}' the given literal text is a data "
-        "from the link {link}. Do not directly answer the question itself"
+        f"question '{question}' the given literal text is a data "
+        f"from the link {link}. Do not directly answer the question itself"
     )
 
     text_splitter = TokenTextSplitter(chunk_size=3000, chunk_overlap=0)
