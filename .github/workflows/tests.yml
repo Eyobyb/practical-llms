@@ -27,16 +27,8 @@ jobs:
           python -m pip install poetry
           cd src
           pip install numpy==1.25.2
-          echo "am IN HERE"
           poetry install
-
-      - name: Run pytest
-        run: |
           echo "am IN HERE"
-          python -m pip install --upgrade pip
-          python -m pip install poetry
-          poetry run pytest --cov=myapp src/tests/
-          echo "am IN HERE"
-        env:
-          FLASK_ENV: debug
+          poetry run pytest --cov=myapp /tests
 
+     
