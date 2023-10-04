@@ -28,6 +28,7 @@ jobs:
           cd src
           echo "am IN HERE"
           pip install numpy==1.25.2
+          echo "am IN HERE"
           poetry install
 
       - name: Run pytest
