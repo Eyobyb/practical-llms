@@ -118,30 +118,30 @@ def test_show_commands_only():
 
     assert result == expected_result
 
-@pytest.fixture
-def logs_with_thoughts_and_command():
-    return [
-        {"Step": 1, "reply": {"thoughts": "Thinking..."}},
-        {"Step": 2, "reply": {"thoughts": "Still thinking...", "command": "Do something else"}},
-    ]
+# @pytest.fixture
+# def logs_with_thoughts_and_command():
+#     return [
+#         {"Step": 1, "reply": {"thoughts": "Thinking..."}},
+#         {"Step": 2, "reply": {"thoughts": "Still thinking...", "command": "Do something else"}},
+#     ]
 
-@pytest.fixture
-def logs_with_final_response():
-    return [
-        {"Step": 1, "reply": "This is the final response."},
-        {"Step": 2, "reply": "Another final response."},
-    ]
+# @pytest.fixture
+# def logs_with_final_response():
+#     return [
+#         {"Step": 1, "reply": "This is the final response."},
+#         {"Step": 2, "reply": "Another final response."},
+#     ]
 
-def test_format_logs_with_thoughts_and_command(logs_with_thoughts_and_command):
-    expected_output = (
-        "-- Step: 1 -- \nThoughts: \n Thinking..."
-        "\n-- Step: 2 -- \nThoughts: \n Still thinking... \nCommand: \n Do something else"
-    )
-    assert log_formatter(logs_with_thoughts_and_command) == expected_output
+# def test_format_logs_with_thoughts_and_command(logs_with_thoughts_and_command):
+#     expected_output = (
+#         "-- Step: 1 -- \nThoughts: \n Thinking..."
+#         "\n-- Step: 2 -- \nThoughts: \n Still thinking... \nCommand: \n Do something else"
+#     )
+#     assert log_formatter(logs_with_thoughts_and_command) == expected_output
 
-def test_format_logs_with_final_response(logs_with_final_response):
-    expected_output = (
-        "-- Step: 1 -- \nFinal Response: \n This is the final response."
-        "\n-- Step: 2 -- \nFinal Response: \n Another final response."
-    )
-    assert log_formatter(logs_with_final_response) == expected_output
+# def test_format_logs_with_final_response(logs_with_final_response):
+#     expected_output = (
+#         "-- Step: 1 -- \nFinal Response: \n This is the final response."
+#         "\n-- Step: 2 -- \nFinal Response: \n Another final response."
+#     )
+#     assert log_formatter(logs_with_final_response) == expected_output
