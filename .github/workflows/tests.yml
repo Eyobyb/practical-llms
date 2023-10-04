@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.12.0
+          python-version: 3.11
 
       - name: Install dependencies
         run: |
@@ -31,5 +31,9 @@ jobs:
           echo "am IN HERE"
           poetry shell
           poetry install
-          poetry run pytest --cov=myapp src/tests/
+
+      - name: Run pytest
+        run: poetry run pytest --cov=myapp src/tests/
+        env:
+          FLASK_ENV: debug
 
