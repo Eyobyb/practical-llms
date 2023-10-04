@@ -31,9 +31,5 @@ jobs:
           echo "am IN HERE"
           poetry shell
           poetry install
-
-      - name: Run pytest
-        run: poetry run pytest --cov=myapp tests/
-        env:
-          FLASK_ENV: testing
+          poetry run pytest --cov=myapp src/tests/
 
