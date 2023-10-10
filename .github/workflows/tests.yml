@@ -29,6 +29,6 @@ jobs:
           pip install numpy==1.25.2
           poetry install
           echo "am IN HERE"
-          poetry run pytest --cov=myapp tests/
+          pytest --cov=sherpa_ai .
 
      
