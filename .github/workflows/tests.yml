@@ -20,6 +20,10 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.11
+      - name: Set secrets in .env file
+        run: |
+          echo "${{ secrets.SHERPA }}" 
+        shell: bash
 
       - name: Install dependencies
         run: |
