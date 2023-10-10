@@ -22,7 +22,7 @@ jobs:
           python-version: 3.11
       - name: Set secrets in .env file
         run: |
-          echo "${{ secrets.SHERPA }}" 
+          echo "${{ secrets.SHERPA.DAILY_LIMIT_REACHED_MESSAGE }}" 
         shell: bash
 
       - name: Install dependencies
