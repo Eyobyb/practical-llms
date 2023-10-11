@@ -20,15 +20,10 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.11
+
       - name: Set secrets in .env file
         run: |
-          echo "${{ secrets }}" 
-        shell: bash
-      - name: lister
-        run: ls
-        shell: bash
-      - name: Set secrets in .env file
-        run: |
+          cd ./src
           echo "SLACK_SIGNING_SECRET=${{ secrets.SLACKSIGNINGSECRET }}" > .env
           echo "SLACK_OAUTH_TOKEN=${{ secrets.SLACKOAUTHTOKEN }}" > .env
           echo "SLACK_VERIFICATION_TOKEN=${{ secrets.SLACKVERIFICATIONTOKEN }}" > .env
@@ -41,6 +36,11 @@ jobs:
           echo "DAILY_TOKEN_LIMIT=${{ secrets.TOKENLIMIT }}" > .env
           echo "TEMPRATURE=${{ secrets.TEMPRATURE }}" > .env
 
+        shell: bash
+
+      - name: lister
+        run: | 
+          ls
         shell: bash
 
       - name: Install dependencies
