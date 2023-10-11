@@ -27,7 +27,7 @@ jobs:
 
       - name: Set secrets in .env file
         run: |
-          cd apps/slackbot/
+          ls
           echo "SLACK_SIGNING_SECRET=${{ secrets.SLACKSIGNINGSECRET }}" > .env
           echo "SLACK_OAUTH_TOKEN=${{ secrets.SLACKOAUTHTOKEN }}" > .env
           echo "SLACK_VERIFICATION_TOKEN=${{ secrets.SLACKVERIFICATIONTOKEN }}" > .env
@@ -53,7 +53,7 @@ jobs:
           poetry run pytest --cov=sherpa_ai .
 
      
-      - name: Cleanup
-        run: |
-          rm .env
-        shell: bash
+      # - name: Cleanup
+      #   run: |
+      #     rm .env
+      #   shell: bash
