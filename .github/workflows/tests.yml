@@ -41,7 +41,7 @@ jobs:
       - name: lister two
         run: | 
           cd ./src
-          ls -a
+          ls 
           cat .env
         shell: bash
 
