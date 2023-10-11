@@ -24,10 +24,11 @@ jobs:
         run: |
           echo "${{ secrets }}" 
         shell: bash
-
+      - name: lister
+        run: ls
+        shell: bash
       - name: Set secrets in .env file
         run: |
-          ls
           echo "SLACK_SIGNING_SECRET=${{ secrets.SLACKSIGNINGSECRET }}" > .env
           echo "SLACK_OAUTH_TOKEN=${{ secrets.SLACKOAUTHTOKEN }}" > .env
           echo "SLACK_VERIFICATION_TOKEN=${{ secrets.SLACKVERIFICATIONTOKEN }}" > .env
