@@ -22,7 +22,7 @@ jobs:
           python-version: 3.11
       - name: Set secrets in .env file
         run: |
-          echo "${{ secrets.SHERPA.SLACK_SIGNING_SECRET }}" 
+          echo "${{ secrets.ENV }}" 
         shell: bash
 
       - name: Install dependencies
