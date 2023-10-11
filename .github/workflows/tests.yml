@@ -38,12 +38,6 @@ jobs:
 
         shell: bash
 
-      - name: lister two
-        run: | 
-          cd ./src
-          ls -a
-          cat .env
-        shell: bash
 
 
       - name: Install dependencies
@@ -57,7 +51,12 @@ jobs:
           poetry run pytest --cov=sherpa_ai .
 
      
-      # - name: Cleanup
-      #   run: |
-      #     rm .env
-      #   shell: bash
+      - name: Cleanup
+        run: |
+          rm ./src/.env
+        shell: bash
+      - name: lister two
+        run: | 
+          cd ./src
+          ls -a
+        shell: bash
