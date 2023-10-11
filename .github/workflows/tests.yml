@@ -24,17 +24,17 @@ jobs:
       - name: Set secrets in .env file
         run: |
           cd ./src
-          echo "SLACK_SIGNING_SECRET=${{ secrets.SLACKSIGNINGSECRET }}" > .env
-          echo "SLACK_OAUTH_TOKEN=${{ secrets.SLACKOAUTHTOKEN }}" > .env
-          echo "SLACK_VERIFICATION_TOKEN=${{ secrets.SLACKVERIFICATIONTOKEN }}" > .env
-          echo "OPENAI_API_KEY=${{ secrets.OPENAIKEY }}" > .env
-          echo "PINECONE_INDEX=${{ secrets.PINCONEID }}" > .env
-          echo "PINECONE_ENV=${{ secrets.PINECONEENV }}" > .env
-          echo "SLACK_PORT=${{ secrets.SLACKPORT }}" > .env
-          echo "SERPER_API_KEY=${{ secrets.SERPAAPIKEY }}" > .env
-          echo "GITHUB_AUTH_TOKEN=${{ secrets.GITHUBOATHKEY }}" > .env
-          echo "DAILY_TOKEN_LIMIT=${{ secrets.TOKENLIMIT }}" > .env
-          echo "TEMPRATURE=${{ secrets.TEMPRATURE }}" > .env
+          echo "SLACK_SIGNING_SECRET=${{ secrets.SLACKSIGNINGSECRET }}" >> .env
+          echo "SLACK_OAUTH_TOKEN=${{ secrets.SLACKOAUTHTOKEN }}" >> .env
+          echo "SLACK_VERIFICATION_TOKEN=${{ secrets.SLACKVERIFICATIONTOKEN }}" >> .env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAIKEY }}" >> .env
+          echo "PINECONE_INDEX=${{ secrets.PINCONEID }}" >> .env
+          echo "PINECONE_ENV=${{ secrets.PINECONEENV }}" >> .env
+          echo "SLACK_PORT=${{ secrets.SLACKPORT }}" >> .env
+          echo "SERPER_API_KEY=${{ secrets.SERPAAPIKEY }}" >> .env
+          echo "GITHUB_AUTH_TOKEN=${{ secrets.GITHUBOATHKEY }}" >> .env
+          echo "DAILY_TOKEN_LIMIT=${{ secrets.TOKENLIMIT }}" >> .env
+          echo "TEMPRATURE=${{ secrets.TEMPRATURE }}" >> .env
 
         shell: bash
 
