@@ -22,8 +22,8 @@ def test_citation_validation():
     data = {"Document": text, "Source": "www.wiki_1.com"}
     data_2 = {"Document": text, "Source": "www.wiki_2.com"}
     resource = [data, data_2]
-    module = CitationValidation()
-    result = module.parse_output(text, resource)
+    module = CitationValidation(resources=resource)
+    _, result = module(text)
     assert data["Source"] in result
 
 

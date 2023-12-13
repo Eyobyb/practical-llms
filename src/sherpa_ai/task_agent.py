@@ -67,6 +67,7 @@ class TaskAgent:
         self.logger = []
 
         link_parser = LinkParser()
+        logger.error(link_parser.links)
         slack_link_paerser = MDToSlackParse()
 
         self.tool_output_parsers = [link_parser]

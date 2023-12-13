@@ -21,6 +21,8 @@ class LinkParser(BaseOutputParser):
         self.link_symbol = "[{id}]"
 
     def parse_output(self, text: str, tool_output=False) -> str:
+        logger.error(self.links)
+
         def replace_with_symbol(match: re.Match):
             link = match.group(1)
             # check if the link is valid

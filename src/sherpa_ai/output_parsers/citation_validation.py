@@ -1,17 +1,24 @@
 import nltk
 from nltk.tokenize import word_tokenize
 
-from sherpa_ai.output_parsers.base import BaseOutputParser
+from sherpa_ai.output_parsers.base import BaseOutputProcessor
 
 nltk.download("punkt")
 
 
-class CitationValidation(BaseOutputParser):
-    def __init__(self, seq_thresh=0.7, jaccard_thresh=0.7, token_overlap=0.7):
+class CitationValidation(BaseOutputProcessor):
+    def __init__(
+        self,
+        seq_thresh=0.7,
+        jaccard_thresh=0.7,
+        token_overlap=0.7,
+        resources: list[dict] = [],
+    ):
         # threshold
         self.seq_thresh = seq_thresh  # threshold for common longest subsequece / text
         self.jaccard_thresh = jaccard_thresh
         self.token_overlap = token_overlap
+        self.resources = resources
 
     def calculate_token_overlap(self, sentence1, sentence2):
         # Tokenize the sentences
@@ -68,7 +75,7 @@ class CitationValidation(BaseOutputParser):
         return sentences
 
     # add citation to the generated text
-    def parse_output(self, generated: str, resources: list[dict()]) -> str:
+    def process_output(self, generated: str) -> tuple[bool, str]:
         # resources type
         # resources = [{"Document":, "Source":...}, {}]
         paragraph = generated.split("\n")
@@ -83,7 +90,7 @@ class CitationValidation(BaseOutputParser):
                 links = []
                 ids = []
                 sentence = sentence.strip()
-                for index, source in enumerate(resources):
+                for index, source in enumerate(self.resources):
                     cited = False  # if this resource is cited
                     text = source["Document"]
                     one_sentences = text.split(".")
@@ -117,4 +124,4 @@ class CitationValidation(BaseOutputParser):
 
                 new_sentence.append(sentence + " " + ", ".join(citations) + ".")
             new_paragraph.append(" ".join(new_sentence) + "\n")
-        return "".join(new_paragraph)
+        return True, "".join(new_paragraph)

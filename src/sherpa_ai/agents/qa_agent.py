@@ -34,6 +34,7 @@ class QAAgent(BaseAgent):
         shared_memory: SharedMemory = None,
         belief: Belief = Belief(),
         num_runs: int = 3,
+        num_validation: int = 3,
         verbose_logger=DummyVerboseLogger(),
         require_meta=False,
         citation_thresh=[
@@ -71,6 +72,7 @@ class QAAgent(BaseAgent):
         self.verbose_logger = verbose_logger
         self.require_meta = require_meta
         self.citation_thresh = citation_thresh
+        self.num_validation = num_validation
 
     def create_actions(self) -> List[BaseAction]:
         return [
@@ -86,15 +88,26 @@ class QAAgent(BaseAgent):
         synthesize_action = SynthesizeOutput(
             self.description, self.llm, add_citation=self.require_meta
         )
-        result = synthesize_action.execute(
-            self.belief.current_task.content,
-            self.belief.get_context(self.llm.get_num_tokens),
-            self.belief.get_internal_history(self.llm.get_num_tokens),
-        )
 
-        if self.require_meta:
-            result = self.add_citation(result)
+        count = 0
+        while count < self.num_validation:
+            result = synthesize_action.execute(
+                self.belief.current_task.content,
+                self.belief.get_context(self.llm.get_num_tokens),
+                self.belief.get_internal_history(self.llm.get_num_tokens),
+            )
+
+            checked, result = self.process_output(result)
+            if checked:
+                break
+
         return result
+
+    def process_output(self, generated: str) -> tuple[bool, str]:
+        if self.require_meta:
+            generated = self.add_citation(generated)
+
+        return True, generated
 
     def add_citation(self, text) -> str:
         google = None
@@ -102,11 +115,14 @@ class QAAgent(BaseAgent):
             if isinstance(action, GoogleSearch):
                 google = action
 
-        citation_module = CitationValidation(
-            self.citation_thresh[0], self.citation_thresh[1], self.citation_thresh[2]
-        )
         resource = google.meta[-1]
+        citation_module = CitationValidation(
+            self.citation_thresh[0],
+            self.citation_thresh[1],
+            self.citation_thresh[2],
+            resource,
+        )
 
-        result = citation_module.parse_output(text, resource)
+        _, result = citation_module(text)
 
         return result
