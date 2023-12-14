@@ -9,6 +9,7 @@ from sherpa_ai.agents.base import BaseAgent
 from sherpa_ai.memory import Belief
 from sherpa_ai.memory.shared_memory import SharedMemory
 from sherpa_ai.output_parsers.citation_validation import CitationValidation
+from sherpa_ai.output_parsers.number_validation import NumberValidation
 from sherpa_ai.verbose_loggers.verbose_loggers import DummyVerboseLogger
 
 # TODO: QA Agent only contains partial implementation from the original
@@ -106,8 +107,14 @@ class QAAgent(BaseAgent):
     def process_output(self, generated: str) -> tuple[bool, str]:
         if self.require_meta:
             generated = self.add_citation(generated)
+        return self.num_validation("source", generated)
 
-        return True, generated
+    
+    
+    def num_validation(self , source , text):
+        num_val = NumberValidation(source)
+        return num_val.process_output(text)
+        
 
     def add_citation(self, text) -> str:
         google = None
